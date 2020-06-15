@@ -63,11 +63,23 @@ void DisplayArray(Building* building, int colElem) {
     }
 }
 
-
+Building** FilterMassiveStruct(string value, Building* building, int colElem) {
+    Building** masOfPointers = new Building *[colElem];
+    int pos = 0;
+    for (int i = 0; i < colElem; colElem++) {
+        if (value == building[i].adress || value == building[i].typeBuilding ||
+            atoi(value.c_str()) == building[i].numberFloors || atoi(value.c_str()) == building[i].numberFlats ||
+            atoi(value.c_str()) == building[i].lifeSpan || atoi(value.c_str()) == building[i].termBeforeRepair) {
+            masOfPointers[pos++] = &building[i];
+        }
+    }
+    return masOfPointers;
+}
 
 int main()
 {
     int numberElem;
+    string key;
     cout << "Input number elements: ";
     while (!(cin >> numberElem)) {
         cout << "Input number elements: ";
@@ -77,6 +89,17 @@ int main()
     Building* building = new Building[numberElem];
 
     InitDataStruct(building, numberElem);
+
+    cout << "Input value of field: ";
+    while (!(cin >> key)) {
+        cout << "Input value of field: ";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+
+    cout << "Massive of pointers: " << FilterMassiveStruct(key, building, numberElem);
+
     DisplayArray(building, numberElem);
+
 }
 
